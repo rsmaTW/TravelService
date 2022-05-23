@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: postgres:11.0
+    environment:
+      - "POSTGRES_USER=root"
+      - "POSTGRES_PASSWORD=root"
+      - "POSTGRES_DB=travel"
+      - "TZ=Asia/Shanghai"
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    container_name: "travel_pg_local"
+
+volumes:
+  db_data:

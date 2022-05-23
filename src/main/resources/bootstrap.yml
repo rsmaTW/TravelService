@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    group: com.tw
+    name: travel-service
+  sleuth:
+    baggage-keys[0]: x-request-id
+    propagation-keys[0]: x-request-id
+    log:
+      slf4j:
+        whitelisted-mdc-keys: x-request-id
+  flyway:
+    baseline-on-migrate: true
+
+logging:
+  config: classpath:logback-local.xml
+
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 1000
+        readTimeout: 3000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 1000
+        sleepWindowInMilliseconds: 5000
+        errorThresholdPercentage: 10
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
